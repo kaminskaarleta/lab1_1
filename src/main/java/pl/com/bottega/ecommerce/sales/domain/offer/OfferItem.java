@@ -21,28 +21,24 @@ import java.util.Date;
 public class OfferItem {
 
 	private ProductSnapshot productSnapshot;
-
+	private Discount discount;
+	
 	private int quantity;
 	private BigDecimal totalCost;
 	private String currency;
 
-	private String discountCause;
-	private BigDecimal discount;
-	
-
 	public OfferItem(ProductSnapshot productSnapshot, int quantity) {
-		this(productSnapshot, quantity, null, null);
+		this(productSnapshot, quantity, null);
 	}
 
-	public OfferItem(ProductSnapshot productSnapshot, int quantity,	BigDecimal discount, String discountCause) {
+	public OfferItem(ProductSnapshot productSnapshot, int quantity,	Discount discount) {
 		this.productSnapshot = productSnapshot;
 		this.quantity = quantity;
 		this.discount = discount;
-		this.discountCause = discountCause;
 
 		BigDecimal discountValue = new BigDecimal(0);
-		if (discount != null)
-			discountValue = discountValue.subtract(discount);
+		if (discount.getDiscount() != null)
+			discountValue = discountValue.subtract(discount.getDiscount());
 
 		this.totalCost = this.productSnapshot.getProductPrice()
 				.multiply(new BigDecimal(quantity)).subtract(discountValue);
@@ -60,12 +56,8 @@ public class OfferItem {
 		return currency;
 	}
 
-	public BigDecimal getDiscount() {
+	public Discount getDiscount() {
 		return discount;
-	}
-
-	public String getDiscountCause() {
-		return discountCause;
 	}
 
 	public int getQuantity() {
@@ -77,7 +69,7 @@ public class OfferItem {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((discount == null) ? 0 : discount.hashCode());
+				+ ((discount.getDiscount() == null) ? 0 : discount.getDiscount().hashCode());
 		result = prime * result + ((productSnapshot == null) ? 0 : productSnapshot.hashCode());
 		result = prime * result + quantity;
 		result = prime * result
@@ -94,10 +86,10 @@ public class OfferItem {
 		if (getClass() != obj.getClass())
 			return false;
 		OfferItem other = (OfferItem) obj;
-		if (discount == null) {
-			if (other.discount != null)
+		if (discount.getDiscount() == null) {
+			if (other.discount.getDiscount() != null)
 				return false;
-		} else if (!discount.equals(other.discount))
+		} else if (!discount.getDiscount().equals(other.discount.getDiscount()))
 			return false;
 		if (productSnapshot == null) {
 			if (other.productSnapshot != null)
