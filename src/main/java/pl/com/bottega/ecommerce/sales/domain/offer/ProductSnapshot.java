@@ -1,16 +1,15 @@
 package pl.com.bottega.ecommerce.sales.domain.offer;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class ProductSnapshot {
 	private String productId;
-	private BigDecimal productPrice;
+	private Money productPrice;
 	private String productName;
 	private Date productSnapshotDate;
 	private String productType;
 	
-	public ProductSnapshot(String productId, BigDecimal productPrice,
+	public ProductSnapshot(String productId, Money productPrice,
 			String productName, Date productSnapshotDate, String productType) {
 		super();
 		this.productId = productId;
@@ -24,7 +23,7 @@ public class ProductSnapshot {
 		return productId;
 	}
 	
-	public BigDecimal getProductPrice() {
+	public Money getProductPrice() {
 		return productPrice;
 	}
 	
@@ -44,7 +43,7 @@ public class ProductSnapshot {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
-		result = prime * result + ((productPrice == null) ? 0 : productPrice.hashCode());
+		result = prime * result + ((productPrice.getValue() == null) ? 0 : productPrice.getValue().hashCode());
 		result = prime * result
 				+ ((productId == null) ? 0 : productId.hashCode());
 		result = prime * result + ((productType == null) ? 0 : productType.hashCode());
@@ -65,10 +64,10 @@ public class ProductSnapshot {
 				return false;
 		} else if (!productName.equals(other.productName))
 			return false;
-		if (productPrice == null) {
-			if (other.productPrice != null)
+		if (productPrice.getValue() == null) {
+			if (other.productPrice.getValue() != null)
 				return false;
-		} else if (!productPrice.equals(other.productPrice))
+		} else if (!productPrice.getValue().equals(other.productPrice.getValue()))
 			return false;
 		if (productId == null) {
 			if (other.productId != null)
